@@ -1,7 +1,91 @@
 import React from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    })
+
+    const navigate = useNavigate()
+
+    const [formError, setFormError] = useState(false)
+
+    const handleChange = (e)=>{
+        const {name, value} = e.target
+        
+        setFormData((prev)=>({...prev, [name]:value}))
+        setFormError(false)
+
+    }
+
+    const handleSubmit = (e)=>{
+        e.preventDefault()
+        if(formData.email.trim() === '' || formData.password.trim() === ''){
+            setFormError(true)
+            return
+        }
+
+    }
+
   return (
-    <div>Login</div>
+    <div className='w-full min-h-dvh flex justify-center items-center px-4 sm:px-0'>
+        <form 
+            className='w-full max-w-md border-2 border-[#334155] bg-[#1E293B] shadow-2xl flex flex-col gap-6 p-4 sm:p-6 rounded-xl'
+            onSubmit={handleSubmit}
+        >
+            <div className=''>
+                <h1 className='text-[#F8FAFC] text-2xl sm:text-3xl text-center'>Welcome Back</h1>
+                <p 
+                    className='text-[#94A3B8] text-sm sm:text-base mt-2 text-center cursor-pointer hover:underline'
+                    onClick={()=>(navigate('/register'))}
+                >
+                    Don't have an account?
+                </p>
+            </div>
+
+            {formError ?
+                <div className='w-full'>
+                    <p className='text-base text-[#E05555] text-center'>*Please fill all the fields</p>
+                </div>
+                :
+                <></>
+            }   
+
+            <div className='w-full flex flex-col gap-1.5'>
+                <label htmlFor="email" className='text-[#CBD5E1] text-lg sm:text-xl'>Email</label>
+                <input 
+                    type="email"
+                    id='email'
+                    name='email'
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder='Enter your email'
+                    className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-1.5 sm:p-2 text-white text-base'
+                />
+            </div>
+
+            <div className='w-full text-[#94A3B8] flex flex-col gap-1.5'>
+                <label htmlFor="password" className='text-[#CBD5E1] text-lg sm:text-xl'>Password</label>
+                <input 
+                    type="password"
+                    id='password'
+                    name='password'
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder='Enter your password'
+                    className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-1.5 sm:p-2 text-white text-base'
+                />
+            </div>
+            <button
+                className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#7DD3FC] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-1 rounded-lg'
+                type='submit'
+            >
+                Submit
+            </button>
+        </form>
+    </div>
   )
 }

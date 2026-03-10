@@ -1,0 +1,66 @@
+# ===============================
+# Node / Backend
+# ===============================
+node_modules/
+**/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Backend build outputs (if using Babel/TypeScript)
+dist/
+build/
+
+# Optional runtime files
+*.pid
+*.seed
+*.out
+
+# ===============================
+# Frontend / React / Vite
+# ===============================
+# Vite / React build output
+dist/
+build/
+
+# Vite cache
+.vite/
+
+# npm / Yarn / pnpm lock files (usually keep these)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ===============================
+# Test coverage
+# ===============================
+coverage/
+*.lcov
+
+# ===============================
+# OS / Editor files
+# ===============================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# ===============================
+# Misc
+# ===============================
+*.swp   # vim swap files
+*.sublime-workspace

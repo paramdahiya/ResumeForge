@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link , useLocation} from 'react-router-dom'
 
 export default function Login() {
 
@@ -9,7 +9,11 @@ export default function Login() {
         password: ''
     })
 
+    const [hideRegisterationMessage, setHideRegisterationMessage] = useState(false)
+
     const navigate = useNavigate()
+    const location = useLocation()
+    const {message} = location.state || {} // check if redirected from registeration
 
     const [formError, setFormError] = useState(false)
 
@@ -31,7 +35,23 @@ export default function Login() {
     }
 
   return (
-    <div className='w-full min-h-dvh flex justify-center items-center px-4 sm:px-0'>
+    <div className='w-full min-h-dvh flex flex-col justify-center items-center px-4 sm:px-0 relative'>
+        
+        { message && (
+            <div className={` ${hideRegisterationMessage ? 'hidden' : 'w-full max-w-md px-4 sm:px-0 absolute top-10 font-medium'}`}>
+                <div className='relative w-full bg-[#38BDF8] text-sm sm:text-base text-[#0F1520] text-center rounded-lg p-2 sm:p-3'>
+                    <p>{message}</p>
+                    
+                    <span 
+                        className='absolute top-2 right-2 text-base sm:text-lg cursor-pointer'
+                        onClick={() => setHideRegisterationMessage(true)}
+                    >
+                        &times;
+                    </span>
+                </div>
+            </div>
+        )}
+
         <form 
             className='w-full max-w-md border-2 border-[#334155] bg-[#1E293B] shadow-2xl flex flex-col gap-6 p-4 sm:p-6 rounded-xl'
             onSubmit={handleSubmit}
@@ -39,10 +59,10 @@ export default function Login() {
             <div className=''>
                 <h1 className='text-[#F8FAFC] text-2xl sm:text-3xl text-center'>Welcome Back</h1>
                 <p 
-                    className='text-[#94A3B8] text-sm sm:text-base mt-2 text-center cursor-pointer hover:underline'
-                    onClick={()=>(navigate('/register'))}
+                    className='text-[#94A3B8] text-sm sm:text-base mt-2 text-center'
                 >
                     Don't have an account?
+                    <Link to={'/register'} className='ml-2 text-[#38BDF8]'>Sign Up</Link>
                 </p>
             </div>
 
@@ -63,7 +83,7 @@ export default function Login() {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder='Enter your email'
-                    className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-1.5 sm:p-2 text-white text-base'
+                    className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-2 sm:p-3 text-white text-base'
                 />
             </div>
 
@@ -76,11 +96,11 @@ export default function Login() {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder='Enter your password'
-                    className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-1.5 sm:p-2 text-white text-base'
+                    className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-2 sm:p-3 text-white text-base'
                 />
             </div>
             <button
-                className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#7DD3FC] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-1 rounded-lg'
+                className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#7DD3FC] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-2 rounded-lg'
                 type='submit'
             >
                 Submit

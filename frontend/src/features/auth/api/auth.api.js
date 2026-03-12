@@ -13,3 +13,16 @@ export const registerUser = async ({userName, email, password})=>{
         throw(error)
     }
 }
+
+const LOGIN_URL='http://localhost:8080/api/auth/login'
+export const loginUser = async ({email, password})=>{
+    try {
+        const response = await axios.post(LOGIN_URL, {email, password}, {
+            withCredentials:true
+        })
+
+        return response.data
+    } catch (error) {
+        throw(error)
+    }
+}

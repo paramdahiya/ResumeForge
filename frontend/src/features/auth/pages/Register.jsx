@@ -104,7 +104,7 @@ export default function Register() {
                 />
             </div>
             <button
-                className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#7DD3FC] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-2 rounded-lg'
+                className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#108cc5] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-2 rounded-lg'
                 type='submit'
             >
                 Submit

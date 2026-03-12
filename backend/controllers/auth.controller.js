@@ -12,6 +12,7 @@ const registerUser =  async (req, res)=>{
             return res.status(400).json({message:'Some fields are missing'})
         }
 
+        // check if the user with the userName or email already exists
         const userExists = await userModel.findOne({
             $or:[{userName}, {email}]
         })

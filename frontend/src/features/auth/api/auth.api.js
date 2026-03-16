@@ -1,12 +1,15 @@
 import axios from 'axios'
 
-const REGISTER_URL='http://localhost:8080/api/auth/register'
+// instance of axios
+const api = axios.create({
+    baseURL:'http://localhost:8080',
+    withCredentials:true
+})
+
 export const registerUser = async ({userName, email, password})=>{
     try {
         // send the data to the server
-        const response = await axios.post(REGISTER_URL, {userName, email, password}, {
-            withCredentials:true
-        })
+        const response = await api.post('/api/auth/register', {userName, email, password})
         return response.data
 
     } catch (error) {
@@ -14,15 +17,17 @@ export const registerUser = async ({userName, email, password})=>{
     }
 }
 
-const LOGIN_URL='http://localhost:8080/api/auth/login'
 export const loginUser = async ({email, password})=>{
     try {
-        const response = await axios.post(LOGIN_URL, {email, password}, {
-            withCredentials:true
-        })
+        const response = await api.post('/api/auth/login', {email, password})
 
         return response.data
     } catch (error) {
         throw(error)
     }
+}
+
+export const logOutUser = async ()=>{
+    const response = await axios.post('/logout')
+    return response.data
 }

@@ -2,10 +2,14 @@ import React from 'react'
 import { useState } from 'react'
 import { registerUser } from '../api/auth.api'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../hooks/useAuth'
+import Spinner from '../../../components/Spinner'
 
 export default function Register() {
 
     const navigate = useNavigate()
+
+    const {isLoading,handleUserRegisteration} = useAuth()
 
     const [formData, setFormData] = useState({
         userName:'',
@@ -30,7 +34,7 @@ export default function Register() {
             return
         }
 
-        registerUser(formData)
+        handleUserRegisteration(formData)
             .then((response)=>{
                 navigate('/login',{
                     state:{
@@ -43,6 +47,20 @@ export default function Register() {
                 // setRegisterationResponse({fetched:false, message:response.message})
                 console.log(err)
             })
+
+        // registerUser(formData)
+        //     .then((response)=>{
+        //         navigate('/login',{
+        //             state:{
+        //                 message: 'Account created successfully. Please Log in'
+        //             }
+        //         })
+        //     })
+        //     .catch((err)=>{
+        //         // const errorMessage = 
+        //         // setRegisterationResponse({fetched:false, message:response.message})
+        //         console.log(err)
+        //     })
         return
     }
 
@@ -103,12 +121,34 @@ export default function Register() {
                     className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-2 sm:p-3 text-white text-base'
                 />
             </div>
-            <button
+
+            {isLoading 
+                ?
+                    <div className='mt-4 flex flex-row w-full text-[#0F1520] bg-[#38BDF8] hover:bg-[#108cc5] text-lg sm:text-xl cursor-pointer py-2 rounded-items-center justify-center gap-4'>
+                        <Spinner/>
+                        <button
+                            className='cursor-not-allowed'
+                            disabled
+                            
+                        >
+                            Registering...
+                        </button>
+                    </div>
+                                
+                :
+                    <button
+                        className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:[#108cc5] hover:scale-[1.05] transition-all duration-2 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-2 rounded-lg'
+                        type='submit'
+                    >
+                        Submit
+                    </button>
+            }
+            {/* <button
                 className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#108cc5] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-2 rounded-lg'
                 type='submit'
             >
                 Submit
-            </button>
+            </button> */}
         </form>
     </div>
   )

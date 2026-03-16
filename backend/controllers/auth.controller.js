@@ -65,7 +65,7 @@ const loginUser = async (req, res)=>{
             maxAge: 60 * 60 * 1000 // 1hr
         })
 
-        return res.status(200).json({token, message:'Logged in successfully'})
+        return res.status(200).json({token, message:'Logged in successfully', user})
     } catch (error) {
         return res.status(500).json({message:'Server Error', error:error.message})
     }

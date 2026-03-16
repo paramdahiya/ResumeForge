@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate, Link , useLocation} from 'react-router-dom'
 import { loginUser } from '../api/auth.api'
+import {useAuth} from '../../../hooks/useAuth'
+import Spinner from '../../../components/Spinner'
 
 export default function Login() {
 
@@ -17,6 +19,7 @@ export default function Login() {
     const {message} = location.state || {} // check if redirected from registeration
 
     const [formError, setFormError] = useState(false)
+    const {isLoading, handleLogin} = useAuth()
 
     const handleChange = (e)=>{
         const {name, value} = e.target
@@ -32,14 +35,21 @@ export default function Login() {
             setFormError(true)
             return
         }
-
-        // send the api request
-        loginUser(formData)
-            .then((res)=>(console.log(res)))
+    
+        handleLogin(formData)
+            .then((res)=>(navigate('/')))
             .catch((err)=>{
                 console.log(err.message)
             })
+        // // send the api request
+        // loginUser(formData)
+        //     .then((res)=>(console.log(res)))
+        //     .catch((err)=>{
+        //         console.log(err.message)
+        //     })
     }
+
+
 
   return (
     <div className='w-full min-h-dvh flex flex-col justify-center items-center px-4 sm:px-0 relative'>
@@ -107,12 +117,29 @@ export default function Login() {
                     className='w-full focus:outline-none bg-[#0B1120] border border-[#334155] focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] p-2 sm:p-3 text-white text-base'
                 />
             </div>
-            <button
-                className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#108cc5] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-2 rounded-lg'
-                type='submit'
-            >
-                Submit
-            </button>
+
+            {isLoading 
+                ?
+                    <div className='mt-4 flex flex-row w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#108cc5] text-lg sm:text-xl cursor-pointer py-2 rounded-lg items-center justify-center gap-4'>
+                        <Spinner/>
+                        <button
+                            className='cursor-not-allowed'
+                            disabled
+                            
+                        >
+                            Logging...
+                        </button>
+                    </div>
+                    
+                :
+                    <button
+                        className='mt-4 w-full text-[#0F1520]  bg-[#38BDF8] hover:bg-[#108cc5] hover:scale-[1.05] transition-all duration-200 hover:shadow-lg text-lg sm:text-xl cursor-pointer py-2 rounded-lg'
+                        type='submit'
+                    >
+                        Submit
+                    </button>
+            }
+            
         </form>
     </div>
   )

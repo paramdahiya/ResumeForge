@@ -62,6 +62,7 @@ const loginUser = async (req, res)=>{
         res.cookie('token', token, {
             httpOnly: true,
             sameSite: 'None',
+            secure:true, // modern browser allow even for local dev
             maxAge: 60 * 60 * 1000 // 1hr
         })
 

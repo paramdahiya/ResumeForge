@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../features/auth/auth.context";
-import { loginUser, logOutUser, registerUser } from "../features/auth/api/auth.api";
+import { getUser, loginUser, logOutUser, registerUser } from "../features/auth/api/auth.api";
 
 // contains the method for login, registeration, logout and getMe
 
@@ -39,6 +39,22 @@ export const useAuth = ()=>{
         await logOutUser()
         setUser(null)
         setIsLoading(false)
+    }
+
+    async function getUserInfo(){
+
+        setIsLoading(true)
+        try {
+            const response = await getUser({userName, email, password})
+            setUser(response.user)
+            return response
+        } catch (error) {
+            throw(error)
+        }
+        finally{
+            setIsLoading(false)
+        }
+        
     }
 
     return {user,isLoading, handleLogin, handleUserRegisteration, handleLogout}

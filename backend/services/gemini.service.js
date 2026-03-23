@@ -7,7 +7,7 @@ const ai = new GoogleGenAI({
 });
 
 
-async function main() {
+async function generateInterviewReport() {
 
   const rawSchema = z.toJSONSchema(reportSchema);
  
@@ -41,4 +41,4 @@ async function main() {
   }
 }
 
-main();
+module.exports = generateInterviewReport

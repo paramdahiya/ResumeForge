@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
+import '../css/home.css'
 
 export default function Home() {
 
@@ -11,7 +12,7 @@ export default function Home() {
                 <div className='flex flex-col gap-4'>
                     
                     <div className='self-start border border-[#334155] rounded-2xl text-[#94A3B8] p-2 flex gap-2 items-center'>
-                        <div class="h-4 w-4 animate-pulse rounded-full bg-blue-400"></div>
+                        <div className="h-4 w-4 animate-pulse rounded-full bg-blue-400"></div>
 
                         <p>Powered by
                             <span className='text-[#38BDF8] ml-2'>Gemini AI</span>
@@ -39,9 +40,16 @@ export default function Home() {
                 </div>
 
                 {/* second column */}
-                <div className='text-red-300 border'>
-                    <h1>Second col</h1>
+                
+                <div className='border border-[#334155] p-2 text-[#F8FAFC]'>
+                   <h2 className='font-semibold'>Interview preparation plan</h2>
+                   <div class="outer">
+                        <div class="inner">
+                            <span className='text-[#0EA5E9] text-xl font-bold'>90%</span>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     )

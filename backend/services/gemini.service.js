@@ -2,10 +2,8 @@ const { GoogleGenAI } = require("@google/genai");
 const {instructions, reportSchema} = require('./gemini.config')
 const {z} = require('zod')
 
-const GEMINI_API_KEY='AIzaSyCRB8QcgSzCHy9zMf9-QUpMiTQI4KNK-D0'
-
 const ai = new GoogleGenAI({
-  apiKey:  GEMINI_API_KEY
+  apiKey:  process.env.GEMINI_API_KEY
 });
 
 

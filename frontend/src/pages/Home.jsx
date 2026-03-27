@@ -42,7 +42,7 @@ export default function Home() {
                 {/* second column */}
                 
                 <div className='border border-[#334155] p-2 text-[#F8FAFC]'>
-                   <h2 className='font-semibold'>Interview preparation plan</h2>
+                   <h2 className='text-center font-semibold'>Interview preparation plan</h2>
                    <div class="outer">
                         <div class="inner">
                             <span className='text-[#0EA5E9] text-xl font-bold'>90%</span>

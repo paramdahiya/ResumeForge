@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 
-const technicalQuestionsSchema = new Mongoose.Schema({
+const technicalQuestionsSchema = new mongoose.Schema({
     question:{
         type:String,
         required:true
@@ -20,7 +20,7 @@ const technicalQuestionsSchema = new Mongoose.Schema({
     }
 )
 
-const behavioralQuestionsSchema = new Mongoose.Schema({
+const behavioralQuestionsSchema = new mongoose.Schema({
     question:{
         type:String,
         required:true
@@ -39,7 +39,7 @@ const behavioralQuestionsSchema = new Mongoose.Schema({
     }
 )
 
-const skillsGapSchema = new Mongoose.Schema({
+const skillsGapSchema = new mongoose.Schema({
     skill:{
         type:String, 
         required:true
@@ -50,29 +50,28 @@ const skillsGapSchema = new Mongoose.Schema({
     }
 })
 
-const taskSchema = new Mongoose.Schema({
-    task:{
-        type:String,
-        required:true
-    },
-})
-
-
-const preparationPlanSchema = new Mongoose.Schema({
+const preparationPlanSchema = new mongoose.Schema({
     day:{
         type:Number,
-        required:'true'
+        required:true
     },
     topic: {
         type:String,
         required:true,
     },
-    tasks:[taskSchema]
-})
+    tasks:[{
+        taskNumber: Number,
+        description: String
+    }]
+},
+    {  
+        _id:false // no id will be created for the questions
+    }
+)
 
 const interviewReportSchema = new mongoose.Schema({
     jobDescription:{
-        String,
+        type: String,
         required:[true, 'Job description is required']
     },
     resume: {
@@ -88,8 +87,12 @@ const interviewReportSchema = new mongoose.Schema({
     },
     technicalQuestions:[technicalQuestionsSchema],
     behavioralQuestions: [behavioralQuestionsSchema],
-    skillGaps:[skillsGapSchema],
-    preparationPlan:[preparationPlanSchema]
+    skillsGap:[skillsGapSchema],
+    preparationPlan:[preparationPlanSchema],
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+    }
 })
 
 // model for the report

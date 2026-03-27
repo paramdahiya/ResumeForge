@@ -3,17 +3,19 @@ const {instructions, reportSchema} = require('./gemini.config')
 const {z} = require('zod')
 
 const ai = new GoogleGenAI({
-  apiKey:  process.env.GEMINI_API_KEY
+  apiKey: process.env.GEMINI_API_KEY
 });
 
 
-async function generateInterviewReport() {
+const generateInterviewReport = async({resume, jd, sd})=>{
 
+  // tell gemini the structure of the response
   const rawSchema = z.toJSONSchema(reportSchema);
  
   const PROMPT = `Generate an interview report based on these details:
                   Job: ${jd}
-                  Candidate: ${sd}`;
+                  self-description: ${sd}
+                  resume: ${resume} `;
 
   try {
     const result = await ai.models.generateContent({
@@ -30,6 +32,7 @@ async function generateInterviewReport() {
 
     // response validation
     reportSchema.parse(rawJson)
+    console.log(rawJson)
     return rawJson
 
   } catch (error) {

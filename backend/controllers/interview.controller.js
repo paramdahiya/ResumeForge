@@ -22,7 +22,7 @@ const getInterviewReport = async (req, res)=>{
                 selfDescription,
                 ...report
             })
-        return res.status(201).json({message:"Report created successfully"})
+        return res.status(201).json({message:"Report created successfully", report})
 
     } catch (error) {
         console.log(error)
@@ -30,4 +30,8 @@ const getInterviewReport = async (req, res)=>{
     }
 }
 
-module.exports = {getInterviewReport}
+const analyseResume = async (req, res)=>{
+    // check if the user has uploaded a resume before
+}
+
+module.exports = {getInterviewReport, analyseResume}

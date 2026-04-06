@@ -2,6 +2,32 @@ import React from 'react'
 import Header from '../components/Header'
 import '../css/home.css'
 import Button from '../components/Button'
+import ScoreCard from '../components/ScoreCard'
+
+const dummyData = {
+    score:62,
+    atsScore:41,
+    clarity:76,
+    impact:58,
+    NumCriticalIssues:6,
+    overallAnalysis: "Needs Improvement",
+    reviewSummary:"6 critical issues found. ATS compatibility low. Impact language weak across all roles.",
+    criticalIssues: 
+    [
+        "No quantified achievements - add metrics to bullet points",
+
+    ],
+    NumWarnings:2,
+    warnings:
+    [
+        "Missing keywords for target role - low ATS match rate",
+        "Summary section too generic - tailor to the job description"
+    ],
+    good:
+    [
+        "Education section is well structured and complete"
+    ]
+}
 
 export default function Home() {
 
@@ -51,17 +77,37 @@ export default function Home() {
 
                     {/* second column */}
                     
-                    <div className='border border-[#334155] p-2 text-[#F8FAFC] flex flex-col'>
-                    <h2 className='text-center font-semibold text-2xl' >Personalised Interview Preparation Plan</h2>
-                    <div class="outer flex flex-col">
-                            <div class="inner">
-                                <span className='text-[#0EA5E9] text-xl font-bold'>90%</span>
+                    <div className='border-t border-t-[#0EA5E9] bg-[#1E293B] p-2 text-[#F8FAFC] flex flex-col shadow-xl pl-5'>
+                        <h2 className='text-center inline-block bg-linear-to-r from-[#38BDF8] to-[#1D4ED8] text-transparent bg-clip-text font-playfair font-black text-base mt-3'>RESUME ANALYSIS</h2>
+
+                        <div className='grid grid-cols-2 mt-6'>
+                            <div className=''>
+                                <div className="outer flex flex-col">
+                                    {/* dummy data */}
+                                    <div class="inner flex flex-col">
+                                        <span className='text-[#F8FAFC] text-3xl'>{dummyData.score}</span>
+                                        <p className='text-[#94A3B8]'>Score</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='flex flex-col'>
+                                <h2 className='text-[#F8FAFC] text-xl'>{dummyData.overallAnalysis}</h2>
+                                <p className='text-[#94A3B8]'>{dummyData.reviewSummary}</p>
                             </div>
                         </div>
+
+                        <div className='flex flex-col sm:flex-row mt-10 border border-[#334155] bg-[#1E293B] shadow-lg p-5 justify-between'>
+                            <ScoreCard name="IMPACT" score={dummyData.impact}></ScoreCard>
+                            <ScoreCard name="CLARITY" score={dummyData.clarity}></ScoreCard>
+                            <ScoreCard name="ATS SCORE" score={dummyData.atsScore}></ScoreCard>
+                        </div>
+                    
                     </div>
+
                 </div>
 
-                <div className='text-[#F8FAFC] flex flex-col mt-20'>
+                {/* <div className='text-[#F8FAFC] flex flex-col mt-20'>
                     <h1
                         className='text-[#F8FAFC] font-playfair font-black text-6xl leading-none'>
                             Get Personalised Interview Preparation Plan in 3 easy steps:
@@ -86,7 +132,7 @@ export default function Home() {
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> */}
             </div>
 
         </div>

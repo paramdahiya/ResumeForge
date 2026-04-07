@@ -1,5 +1,5 @@
 const { GoogleGenAI } = require("@google/genai");
-const {instructions, reportSchema} = require('./gemini.config')
+const {instructions, reportSchema, resumeAnalysisSchema} = require('./gemini.config')
 const {z} = require('zod')
 
 const ai = new GoogleGenAI({
@@ -44,4 +44,35 @@ const generateInterviewReport = async({resume, jd, sd})=>{
   }
 }
 
-module.exports = generateInterviewReport
+const analyseResume = async ({resume})=>{
+
+  // tell gemini the structure of the response
+  const rawSchema = z.toJSONSchema(resumeAnalysisSchema);
+ 
+  const PROMPT = `You are a senior hiring manager with 7+ years of experience in multiple different fields such as IT and Business. Your task is to analyse the candidate's resume and provide a tailored analysis of the resume based on the industry standards to help the candidate improve their current resume. I will now attach the resume: ${resume}`;
+  try {
+    const result = await ai.models.generateContent({
+        model:"gemini-2.5-flash",
+        contents: [{ role: "user", parts: [{ text: PROMPT }] }],
+        config:{
+          responseMimeType:'application/json',
+          responseSchema: rawSchema
+        }
+    });
+    const responseText = result.text;
+    const rawJson = JSON.parse(responseText);
+
+    resumeAnalysisSchema.parse(rawJson); // errors will be caught
+    return rawJson;
+    
+  }
+  catch(e){
+    if (e instanceof z.ZodError){
+      return res.status(500).josn({message:"Sorry the analysis cannot be done at the moment."});
+    }else {
+      console.error("Error calling Gemini API:", error);
+    }
+  }
+}
+
+module.exports = {generateInterviewReport, analyseResume};

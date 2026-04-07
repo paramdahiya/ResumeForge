@@ -94,4 +94,21 @@ const reportSchema = z.object({
     }))
 });
 
-module.exports = {instructions, reportSchema}
+const resumeAnalysisSchema = z.object(
+    {
+        Score: z.number().min(0).max(100).describe("overall score for the resume in terms of getting selected for an interview."),
+        Impact: z.number().min(0).max(100).describe("The overall score for the impact of the resume on the hiring team."),
+        Clarity: z.number().min(0).max(100).describe("Overall score for the resume in terms of how clear it is in showcasing the strengths."),
+        atsScore: z.number().min(0).max(100).describe("Overall score for the resume to represent how ATS friendly it is."),
+        overallAnalysis: z.string().describe("One line statement about the resume effectiveness."),
+        reviewSummary: z.string().describe("2-3 lines to summarise the issues and strenghts of the resume. Highlight the number of critical issues found in the resume."),
+        numCriticalIssues: z.number().describe("Number of critical issues in the resume."),
+        criticalIssues: z.array(z.string().describe("Critical issue")),
+        numWarnings:z.number().describe("The number of warnings based on the resume."),
+        warnings: z.array(z.string()),
+        strenghts:z.array(z.string().describe("Strengt of the resume"))
+
+    }
+)
+
+module.exports = {instructions, reportSchema, resumeAnalysisSchema}

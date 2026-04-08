@@ -6,6 +6,7 @@ const cors = require('cors')
 
 const authRouter = require('./routes/auth.router')
 const interviewRouter = require('./routes/interview.router')
+const resumeRouter = require("./routes/resume.router");
 
 const app = express() // creating server instance
 
@@ -18,6 +19,7 @@ app.use(cors({
 
 app.use('/api/auth',authRouter)
 app.use('/api/report', interviewRouter)
+app.use("/api/resume", resumeRouter);
 
 // catch any error
 app.use((err, req, res, next)=>{

@@ -2,6 +2,7 @@ const {generateInterviewReport , analyseResume} = require('../services/gemini.se
 const {PDFParse} = require('pdf-parse')
 const interviewReportModel = require('../models/interviewReport.model')
 const userModel = require("../models/user.model")
+const resumeModel = require("../models/resume.model");
 
 const getInterviewReport = async (req, res)=>{
 
@@ -35,17 +36,21 @@ const getResumeAnalysis = async (req, res)=>{
     // check if the user has uploaded a resume before
     try {
         // get the user from the db
-        const user = await userModel.findById(req.user.id)
-        const resume = user.resumeText
+        const resumes = await resumeModel.find({userId: req.user.id})
+        console.log(resumes);
+        return res.status(200);
+        // const resume = user.resumeText
         
-        if (!resume){
-            res.status(400).json({message:"No resume found for analysis."});
-        }
+        // if (!resume){
+        //     res.status(400).json({message:"No resume found for analysis."});
+        // }
 
         // call the gemini api to review the resume
-        await analyseResume({resume});
-        
-        return res.status(200).json({message:"api worked"});
+        const resumeAnalysis = await analyseResume({resume});
+
+        // store the analysis in the resume collection
+
+        return res.status(200).json({message:"Successfully reviewed the resume.", review: resumeAnalysis});
 
     } catch (error) {
         
@@ -53,4 +58,4 @@ const getResumeAnalysis = async (req, res)=>{
 
 }
 
-module.exports = {getInterviewReport, analyseResume}
+module.exports = {getInterviewReport, getResumeAnalysis}

@@ -1,10 +1,38 @@
 import React from 'react'
 import { useState } from 'react'
+import Button from "../components/Button";
 
 export default function () {
     const [jobDescription, setJobDescription] = useState("");
     const [summary, setSummary] = useState("");
+    const [file, setFile] = useState(null);
 
+    const handleFileUpload = (e)=>{
+        const file = e.target.files[0]
+        setFile(file);
+    }
+
+    // check for empty fields
+    const inputValidation = ()=>{
+        if(!file){
+            alert("Please upload a file")
+            return;
+        }
+
+        else if (jobDescription.trim() === ""){
+            alert("Please provide a job description.");
+            return;
+        }
+        else if (summary.trim() === ""){
+            alert("Please provide a summary.");
+            return;
+        }
+    }
+
+    const handleClick = (e)=>{
+        inputValidation();
+        // send api req to the backend
+    }
   return (
     <div className='flex flex-col w-full items-center gap-4 p-2'>
         
@@ -18,8 +46,9 @@ export default function () {
         </p>
 
         <div className='w-full md:max-w-7xl bg-[#1E293B] shadow-xl'>
+            
             <div className='w-full grid grid-cols-1 md:grid-cols-[1fr_auto_1fr]'>
-                
+
                 <div className='w-full flex flex-col p-2 gap-2'>
                     <label 
                         className='text-[#F8FAFC] text-xl md:text-2xl flex items-center gap-2'
@@ -33,6 +62,7 @@ export default function () {
                     <textarea 
                         name="jd" 
                         id="jd"
+                        onChange={(e)=>(setJobDescription(e.target.value))}
                         className='text-[#94A3B8] text-xl h-120 border border-[#334155] pl-2 focus:outline-none focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01]'
                         placeholder='Enter the job description...'
                     >
@@ -60,6 +90,8 @@ export default function () {
                         type="file"
                         name="resume" 
                         id="resume" 
+                        accept='.pdf, application/pdf'
+                        onChange={handleFileUpload}
                         className='text-[#94A3B8] text-xl  border border-[#334155] pl-2 focus:outline-none focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01]'
                     />
                     {/* the below div creates the horizontal line */}
@@ -78,8 +110,9 @@ export default function () {
                             Quick Self Description
                         </label>
                         <textarea 
-                            name="summart" 
+                            name="summary" 
                             id="summary"
+                            onChange={(e)=>(setSummary(e.target.value))}
                             value={summary}
                             placeholder='Enter Your Professional Summary'
                             className='text-[#94A3B8] text-xl  border border-[#334155] pl-2 focus:outline-none focus:ring-1 focus:ring-[rgba(56, 189, 248, 0.5)] transition-all duration-200 focus:shadow-xl focus:scale-[1.01] h-80'
@@ -87,7 +120,12 @@ export default function () {
                     </div>
 
                 </div>
-
+            </div>
+            <div className='w-full flex justify-center mt-6 mb-6'>
+                <Button 
+                    text={"Generate Report"}
+                    clickHandler={handleClick}
+                    />
             </div>
         </div>
     </div>

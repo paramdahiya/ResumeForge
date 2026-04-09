@@ -124,35 +124,7 @@ export default function Home() {
                     </div>
 
                 </div>
-
-                {/* <div className='text-[#F8FAFC] flex flex-col mt-20'>
-                    <h1
-                        className='text-[#F8FAFC] font-playfair font-black text-6xl leading-none'>
-                            Get Personalised Interview Preparation Plan in 3 easy steps:
-                    </h1>
-                        <ul className='list-none'>
-                        <li>
-                            <div className='flex flex-col'>
-                                <label className='text-[#94A3B8]' htmlFor="jobDescription">Job Description</label>
-                                <textarea name="jobDescription" id="jobDescription"></textarea>
-                            </div>
-                        </li>
-                        <li>
-                            <div className='flex flex-col'>
-                                <label className='text-[#94A3B8]' htmlFor="jobDescription">Your Summary</label>
-                                <textarea name="jobDescription" id="jobDescription"></textarea>
-                            </div>
-                        </li>
-                        <li>
-                            <div className='flex flex-col'>
-                                <label className='text-[#94A3B8]' htmlFor="jobDescription">Upload Resume</label>
-                                <textarea name="jobDescription" id="jobDescription"></textarea>
-                            </div>
-                        </li>
-                    </ul>
-                </div> */}
             </div>
-
         </div>
     )
 }

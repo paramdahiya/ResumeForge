@@ -6,4 +6,19 @@ const api = axios.create({
 })
 
 // post request
-api.post(api)
+export const getInterviewReport = async ({jobDescription, selfDescription, resume})=>{
+    const formData = new FormData();
+    formData.append("resume", resume);
+    formData.append("jobDescription", jobDescription);
+    formData.append("selfDescription", selfDescription);
+
+    try {
+        // send req
+        const data = await api.post("/generateReport",formData);
+        console.log(data.report);
+        return;
+
+    } catch (error) {
+        console.log(error);
+    }
+}

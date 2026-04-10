@@ -1,11 +1,17 @@
 import React from 'react'
 import { useState } from 'react'
 import Button from "../components/Button";
+import { getInterviewReport } from '../api/gemini.api';
+import { AuthContext } from '../features/auth/auth.context';
+import { useContext } from 'react';
+import DisabledButton from '../components/DisabledButton';
+import Spinner from '../components/Spinner';
 
 export default function () {
     const [jobDescription, setJobDescription] = useState("");
     const [summary, setSummary] = useState("");
     const [file, setFile] = useState(null);
+    const {isLoading, setIsLoading} = useContext(AuthContext);
 
     const handleFileUpload = (e)=>{
         const file = e.target.files[0]
@@ -16,22 +22,38 @@ export default function () {
     const inputValidation = ()=>{
         if(!file){
             alert("Please upload a file")
-            return;
+            return false;
         }
 
         else if (jobDescription.trim() === ""){
             alert("Please provide a job description.");
-            return;
+            return false;
         }
         else if (summary.trim() === ""){
             alert("Please provide a summary.");
-            return;
+            return false;
         }
+
+        return true;
     }
 
-    const handleClick = (e)=>{
-        inputValidation();
-        // send api req to the backend
+    const handleClick = async (e)=>{
+        if (!inputValidation()){
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+
+            // send api req to the backend
+            await getInterviewReport({jobDescription, selfDescription:summary, resume:file});
+
+        } catch (error) {
+            
+        }
+        finally{
+            setIsLoading(false);
+        }
     }
   return (
     <div className='flex flex-col w-full items-center gap-4 p-2'>
@@ -121,12 +143,17 @@ export default function () {
 
                 </div>
             </div>
-            <div className='w-full flex justify-center mt-6 mb-6'>
-                <Button 
-                    text={"Generate Report"}
-                    clickHandler={handleClick}
+            {
+                isLoading ? 
+                <DisabledButton text={"Generating Report..."}/> 
+                :
+                <div className='w-full flex justify-center mt-6 mb-6'>
+                    <Button 
+                        text={"Generate Report"}
+                        clickHandler={handleClick}
                     />
-            </div>
+                </div>
+            }
         </div>
     </div>
   )
